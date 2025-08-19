@@ -1,15 +1,14 @@
-# Railway Deployment Trigger
+# Deployment Trigger
 
-This file is created to trigger a new deployment on Railway.
-Timestamp: 2025-08-19 13:14:28
+This file is used to trigger new deployments.
 
-## Changes Made:
-- Created minimal Flask app (app_minimal.py)
-- Reduced dependencies to just Flask
-- Added health check endpoint
-- Configured for fast startup
+Last updated: 2024-08-19 17:01:00
 
-## Expected Result:
-- Successful deployment
-- Working web interface
-- Mock recommendations displayed
+## Chatbot Features
+- AI-powered book recommendations
+- AI-powered podcast recommendations  
+- Natural language processing
+- Machine learning backend
+- Beautiful responsive interface
+
+Status: ACTIVE DEPLOYMENT
