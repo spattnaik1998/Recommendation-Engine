@@ -35,7 +35,7 @@ def index():
         <div class="container">
             <h1>🚀 Readmefy Deployed Successfully!</h1>
             <div class="status">
-                <p class="success">✅ Your Flask application is running on Railway!</p>
+                <p class="success">✅ Your Flask application is running on Vercel!</p>
                 <p>This is a minimal version to verify deployment works.</p>
             </div>
             
@@ -98,8 +98,8 @@ def get_podcast_count():
         'message': 'Mock data - deployment successful!'
     })
 
-# For Vercel deployment
-app_instance = app
+# For Vercel deployment - this is the WSGI application
+application = app
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

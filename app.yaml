@@ -1,0 +1,9 @@
+# Google App Engine configuration
+runtime: python311
+
+env_variables:
+  FLASK_ENV: production
+
+handlers:
+- url: /.*
+  script: auto
