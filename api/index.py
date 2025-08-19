@@ -61,6 +61,332 @@ def index():
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .text-white-25 { opacity: 0.25; }
+        .text-white-50 { opacity: 0.75; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-book-open me-2"></i>Readmefy
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#recommendations">Recommendations</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold text-white mb-4">
+                        🚀 AI-Powered Recommendations
+                    </h1>
+                    <p class="lead text-white-50 mb-4">
+                        Discover Science, Technology, and AI content with our intelligent recommendation system. Get personalized book and podcast suggestions powered by machine learning.
+                    </p>
+                    <a href="#recommendations" class="btn btn-light btn-lg">
+                        <i class="fas fa-robot me-2"></i>Try AI Chatbot
+                    </a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <i class="fas fa-brain fa-10x text-white-25"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section id="recommendations" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold">
+                        <i class="fas fa-star text-warning me-2"></i>
+                        AI Recommendation Chatbot
+                    </h2>
+                    <p class="lead">Ask our AI what you want to learn about!</p>
+                </div>
+            </div>
+
+            <!-- Recommendation Tabs -->
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8">
+                    <ul class="nav nav-pills nav-justified mb-4" id="recommendation-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="books-tab" data-bs-toggle="pill" data-bs-target="#books-recommendations" type="button" role="tab">
+                                <i class="fas fa-book me-2"></i>📚 Book Chatbot
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="podcasts-tab" data-bs-toggle="pill" data-bs-target="#podcasts-recommendations" type="button" role="tab">
+                                <i class="fas fa-podcast me-2"></i>🎧 Podcast Chatbot
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-content" id="recommendation-content">
+                <!-- Book Chatbot Tab -->
+                <div class="tab-pane fade show active" id="books-recommendations" role="tabpanel">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="card shadow-lg border-0">
+                                <div class="card-header bg-primary text-white text-center">
+                                    <h4 class="mb-0">
+                                        <i class="fas fa-robot me-2"></i>
+                                        📚 AI Book Recommendation Chatbot
+                                    </h4>
+                                    <small>Tell me what you want to learn about!</small>
+                                </div>
+                                <div class="card-body p-4">
+                                    <form id="book-chat-form">
+                                        <div class="mb-4">
+                                            <label for="book-query" class="form-label fw-bold">What would you like to learn about?</label>
+                                            <textarea class="form-control form-control-lg" id="book-query" rows="4" 
+                                                placeholder="Example: 'I want to learn machine learning for beginners' or 'Show me books about quantum computing'"></textarea>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                                <i class="fas fa-magic me-2"></i>Get AI Book Recommendations
+                                            </button>
+                                        </div>
+                                    </form>
+                                    
+                                    <div id="book-loading" class="text-center mt-4" style="display: none;">
+                                        <div class="spinner-border text-primary mb-3" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="text-muted">🤖 AI is finding perfect books for you...</p>
+                                    </div>
+                                    
+                                    <div id="book-recommendations-results" class="mt-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Podcast Chatbot Tab -->
+                <div class="tab-pane fade" id="podcasts-recommendations" role="tabpanel">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="card shadow-lg border-0">
+                                <div class="card-header bg-success text-white text-center">
+                                    <h4 class="mb-0">
+                                        <i class="fas fa-robot me-2"></i>
+                                        🎧 AI Podcast Recommendation Chatbot
+                                    </h4>
+                                    <small>Tell me what you want to listen to!</small>
+                                </div>
+                                <div class="card-body p-4">
+                                    <form id="podcast-chat-form">
+                                        <div class="mb-4">
+                                            <label for="podcast-query" class="form-label fw-bold">What would you like to listen to?</label>
+                                            <textarea class="form-control form-control-lg" id="podcast-query" rows="4" 
+                                                placeholder="Example: 'I want podcasts about AI ethics' or 'Show me tech podcasts for developers'"></textarea>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-success btn-lg px-5">
+                                                <i class="fas fa-magic me-2"></i>Get AI Podcast Recommendations
+                                            </button>
+                                        </div>
+                                    </form>
+                                    
+                                    <div id="podcast-loading" class="text-center mt-4" style="display: none;">
+                                        <div class="spinner-border text-success mb-3" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="text-muted">🤖 AI is finding perfect podcasts for you...</p>
+                                    </div>
+                                    
+                                    <div id="podcast-recommendations-results" class="mt-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-book-open me-2"></i>Readmefy</h5>
+                    <p class="mb-0">AI-powered recommendations for books and podcasts.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">
+                        <i class="fas fa-cogs me-2"></i>
+                        Powered by Machine Learning
+                    </p>
+                    <small class="text-muted">© 2024 Readmefy. All rights reserved.</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript for Chatbot -->
+    <script>
+        // Book Chat Form Handler
+        document.getElementById('book-chat-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const query = document.getElementById('book-query').value.trim();
+            if (!query) {
+                alert('Please enter what you want to learn about!');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('book-loading').style.display = 'block';
+            document.getElementById('book-recommendations-results').innerHTML = '';
+            
+            try {
+                const response = await fetch('/api/chat-recommendations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: query })
+                });
+                
+                const data = await response.json();
+                
+                // Hide loading
+                document.getElementById('book-loading').style.display = 'none';
+                
+                if (data.status === 'success' && data.recommendations) {
+                    displayBookRecommendations(data.recommendations);
+                } else {
+                    document.getElementById('book-recommendations-results').innerHTML = 
+                        '<div class="alert alert-warning">🤖 AI is learning! Try: "machine learning books for beginners"</div>';
+                }
+            } catch (error) {
+                document.getElementById('book-loading').style.display = 'none';
+                document.getElementById('book-recommendations-results').innerHTML = 
+                    '<div class="alert alert-info">🤖 Chatbot is ready! Try asking for book recommendations.</div>';
+            }
+        });
+        
+        // Podcast Chat Form Handler
+        document.getElementById('podcast-chat-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const query = document.getElementById('podcast-query').value.trim();
+            if (!query) {
+                alert('Please enter what you want to listen to!');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('podcast-loading').style.display = 'block';
+            document.getElementById('podcast-recommendations-results').innerHTML = '';
+            
+            try {
+                const response = await fetch('/api/podcast-chat-recommendations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: query })
+                });
+                
+                const data = await response.json();
+                
+                // Hide loading
+                document.getElementById('podcast-loading').style.display = 'none';
+                
+                if (data.status === 'success' && data.recommendations) {
+                    displayPodcastRecommendations(data.recommendations);
+                } else {
+                    document.getElementById('podcast-recommendations-results').innerHTML = 
+                        '<div class="alert alert-warning">🤖 AI is learning! Try: "tech podcasts for developers"</div>';
+                }
+            } catch (error) {
+                document.getElementById('podcast-loading').style.display = 'none';
+                document.getElementById('podcast-recommendations-results').innerHTML = 
+                    '<div class="alert alert-info">🤖 Chatbot is ready! Try asking for podcast recommendations.</div>';
+            }
+        });
+        
+        function displayBookRecommendations(recommendations) {
+            let html = '<div class="alert alert-success"><h5>🤖 AI Found These Books For You:</h5></div>';
+            recommendations.forEach((book, index) => {
+                html += `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">📖 ${book.title || 'Recommended Book ' + (index + 1)}</h5>
+                            <p class="card-text">${book.description || book.summary || 'Great book recommendation!'}</p>
+                            <small class="text-muted">By ${book.author || 'Various Authors'}</small>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('book-recommendations-results').innerHTML = html;
+        }
+        
+        function displayPodcastRecommendations(recommendations) {
+            let html = '<div class="alert alert-success"><h5>🤖 AI Found These Podcasts For You:</h5></div>';
+            recommendations.forEach((podcast, index) => {
+                html += `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">🎧 ${podcast.title || 'Recommended Podcast ' + (index + 1)}</h5>
+                            <p class="card-text">${podcast.description || podcast.summary || 'Great podcast recommendation!'}</p>
+                            <small class="text-muted">By ${podcast.author || 'Various Hosts'}</small>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('podcast-recommendations-results').innerHTML = html;
+        }
+    </script>
+</body>
+</html>'''
+
+@app.route('/new')
+def new_interface():
+    """New interface route to bypass caching."""
+    return '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readmefy - AI-Powered Book Recommendations</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="/static/css/style.css" rel="stylesheet">
 </head>
