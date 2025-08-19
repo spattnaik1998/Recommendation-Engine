@@ -341,15 +341,16 @@ def initialize_services():
             # Don't raise - let the app continue without ML features
             pass
 
-@app.before_first_request
-def startup():
-    """Initialize services on first request."""
-    try:
-        initialize_services()
-    except Exception as e:
-        logger.error(f"Service initialization failed: {e}")
-        # Continue anyway
-        pass
+# For Vercel deployment - this is the WSGI application
+application = app
+
+# Initialize services when the module is loaded
+try:
+    initialize_services()
+except Exception as e:
+    logger.error(f"Service initialization failed: {e}")
+    # Continue anyway
+    pass
 
 if __name__ == '__main__':
     # Initialize the application
