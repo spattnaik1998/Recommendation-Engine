@@ -18,6 +18,12 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
 
+# Add a simple test route to verify the app is working
+@app.route('/test')
+def test():
+    """Simple test endpoint."""
+    return jsonify({'message': 'App is working!', 'timestamp': datetime.now().isoformat()})
+
 @app.route('/')
 def index():
     """Main page with book recommendation interface."""
