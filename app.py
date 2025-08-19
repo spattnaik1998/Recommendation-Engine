@@ -331,20 +331,25 @@ def initialize_services():
     if not services_initialized:
         logger.info("Initializing services...")
         try:
+            # Only initialize basic services for now
             book_service.initialize()
-            recommendation_engine.initialize()
             podcast_service.initialize()
-            podcast_recommendation_engine.initialize(podcast_service.get_all_podcasts())
             services_initialized = True
-            logger.info("Services initialized successfully")
+            logger.info("Basic services initialized successfully")
         except Exception as e:
             logger.error(f"Failed to initialize services: {e}")
-            raise
+            # Don't raise - let the app continue without ML features
+            pass
 
 @app.before_first_request
 def startup():
     """Initialize services on first request."""
-    initialize_services()
+    try:
+        initialize_services()
+    except Exception as e:
+        logger.error(f"Service initialization failed: {e}")
+        # Continue anyway
+        pass
 
 if __name__ == '__main__':
     # Initialize the application
