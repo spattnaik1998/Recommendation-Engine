@@ -1,0 +1,7 @@
+app_simple.py
+app_minimal.py
+*.pyc
+__pycache__/
+.git/
+.gitignore
+README.md
