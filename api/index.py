@@ -7,6 +7,8 @@ from typing import Dict, List
 
 # Import our modules
 try:
+    import sys
+    sys.path.append('..')
     from backend.book_service import BookService
     from backend.recommendation_engine import RecommendationEngine
     from backend.data_loader import DataLoader
@@ -21,7 +23,10 @@ except ImportError as e:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+# Initialize Flask app with proper template and static folders
+app = Flask(__name__, 
+            template_folder='../templates',
+            static_folder='../static')
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
 
 # Initialize services if available
