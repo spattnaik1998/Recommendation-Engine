@@ -38,6 +38,11 @@ def index():
     """Main page with book recommendation interface."""
     return render_template('index.html')
 
+@app.route('/health')
+def health_check():
+    """Simple health check endpoint for Railway."""
+    return jsonify({'status': 'healthy', 'timestamp': datetime.now().isoformat()})
+
 @app.route('/api/books/count')
 def get_book_count():
     """Get total number of books in the database."""
@@ -317,6 +322,30 @@ def internal_error(error):
     logger.error(f"Internal server error: {error}")
     return render_template('500.html'), 500
 
+# Global flag to track initialization
+services_initialized = False
+
+def initialize_services():
+    """Initialize services lazily when first needed."""
+    global services_initialized
+    if not services_initialized:
+        logger.info("Initializing services...")
+        try:
+            book_service.initialize()
+            recommendation_engine.initialize()
+            podcast_service.initialize()
+            podcast_recommendation_engine.initialize(podcast_service.get_all_podcasts())
+            services_initialized = True
+            logger.info("Services initialized successfully")
+        except Exception as e:
+            logger.error(f"Failed to initialize services: {e}")
+            raise
+
+@app.before_first_request
+def startup():
+    """Initialize services on first request."""
+    initialize_services()
+
 if __name__ == '__main__':
     # Initialize the application
     logger.info("Starting Book Recommendation Application...")
@@ -324,16 +353,6 @@ if __name__ == '__main__':
     # Create necessary directories
     os.makedirs('data', exist_ok=True)
     os.makedirs('logs', exist_ok=True)
-    
-    # Initialize services
-    try:
-        book_service.initialize()
-        recommendation_engine.initialize()
-        podcast_service.initialize()
-        podcast_recommendation_engine.initialize(podcast_service.get_all_podcasts())
-        logger.info("Services initialized successfully")
-    except Exception as e:
-        logger.error(f"Failed to initialize services: {e}")
     
     # Run the application
     debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
