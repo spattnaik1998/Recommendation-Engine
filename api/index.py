@@ -25,8 +25,8 @@ logger = logging.getLogger(__name__)
 
 # Initialize Flask app with proper template and static folders
 app = Flask(__name__, 
-            template_folder='../templates',
-            static_folder='../static')
+            template_folder='templates',
+            static_folder='static')
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
 
 # Initialize services if available
