@@ -49,12 +49,8 @@ if BACKEND_AVAILABLE:
 @app.route('/')
 def index():
     """Main page with book recommendation interface."""
-    try:
-        return render_template('index.html')
-    except Exception as e:
-        logger.error(f"Template rendering failed: {e}")
-        # Return the beautiful template directly
-        return '''<!DOCTYPE html>
+    # Return the beautiful template directly
+    return '''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
